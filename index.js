@@ -3,20 +3,23 @@ import "./loadEnv.js";
 import grades from "./routes/grades.js";
 import inspections from "./routes/inspections.js";
 
-// this is accessing the object with the value stored in the .env
+// logging to see if the .env is connecting
 console.log(process.env.ATLAS_URI);
 
 // creating the app route and port
 const app = express();
+// process.env for external deployment route and 3009 internal for local environment
 const PORT = process.env.PORT || 3009;
 
+// Convert received data into json body
 app.use(express.json());
 
 app.use("/grades", grades);
 app.use("/inspections", inspections);
 
+// root router
 app.get("/", (req, res) => {
-  res.send("Welcome to the API.");
+  res.send("Welcome to MongoDB.");
 });
 
 // Global error handling
