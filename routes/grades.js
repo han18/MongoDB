@@ -99,6 +99,23 @@ router.patch("/:id/add", async (req, res) => {
 
 // =========================END OF PATCH ROUTE==========
 
+// =========== PATCH to REMOVE A SCORE ============
+
+// removing score to a grade entry must type "remove" in the route
+router.patch("/:id/remove", async (req, res) => {
+  let collection = await db.collection("grades");
+  let query = { _id: new ObjectId(req.params.id) };
+
+  let result = await collection.findOneAndDelete(query, {
+    $push: { scores: req.body },
+  });
+
+  if (!result) res.send("Not found").status(404);
+  else res.send(result).status(200);
+});
+
+// =========================END OF PATCH ROUTE==========
+
 // ================ DELETE =========
 // Delete a single grade entry
 router.delete("/:id", async (req, res) => {
